@@ -1,0 +1,30 @@
+.MODEL SMALL
+.STACK 100H
+
+.DATA
+    ARR DB 25, 10, 45, 60, 5, 90, 12
+    LEN DB 7
+    SMALLEST DB ?
+
+.CODE
+    MOV AX, @DATA
+    MOV DS, AX
+
+    LEA SI, ARR
+    MOV CL, LEN
+    MOV AL, [SI]
+    MOV SMALLEST, AL
+    INC SI
+    DEC CL
+
+NEXT_SMALL:
+    MOV DL, [SI]
+    CMP DL, SMALLEST
+    JGE SKIP_SMALL
+    MOV SMALLEST, DL
+
+SKIP_SMALL:
+    INC SI
+    DEC CL
+    JNZ NEXT_SMALL
+    HLT
